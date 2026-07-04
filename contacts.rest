@@ -1,0 +1,9 @@
+### Get all contacts
+GET http://localhost:3000/contacts
+
+### Get one contact by id (replace with actual MongoDB ID from your database)
+GET http://localhost:3000/contacts/6a497dc430770313c059d15b
+
+### Testing on Render (after deployment)
+# GET https://your-render-url.onrender.com/contacts
+# GET https://your-render-url.onrender.com/contacts/REPLACE_WITH_ACTUAL_MONGODB_ID
