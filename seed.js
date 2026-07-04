@@ -5,7 +5,8 @@ const { connectToDatabase } = require('./src/database/connect');
 dotenv.config();
 
 const seedContacts = async () => {
-  if (!process.env.MONGODB_URI || process.env.MONGODB_URI.includes('your_mongodb_connection_string_here')) {
+  const mongoUri = process.env.MONGODB_URI || process.env.MONGODB_URL;
+  if (!mongoUri || mongoUri.includes('your_mongodb_connection_string_here')) {
     console.log('No valid MongoDB URI found. Skipping seed import.');
     return;
   }
