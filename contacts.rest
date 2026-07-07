@@ -2,9 +2,9 @@
 GET http://localhost:3000/contacts
 
 ### Get one contact by id (replace with actual MongoDB ID from your database)
-GET http://localhost:3000/contacts/6a497dc430770313c059d15b
+GET http://localhost:3000/contacts/[id]
 
 ###_testing on Render (after deployment)
-GET https://cse341-rtep.onrender.com/contacts
+GET https://cse341-rtep.onrender.com/contacts/[id]
 
-GET https://cse341-rtep.onrender.com/contacts/6a497dc430770313c059d15b
+GET https://cse341-rtep.onrender.com/contacts/
