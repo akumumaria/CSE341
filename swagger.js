@@ -5,7 +5,7 @@ const doc = {
     title: 'CSE341 API',
     description: 'CSE341 backend project API documentation',
   },
-  host: 'https://cse341-rtep.onrender.com',
+  host: 'cse341-rtep.onrender.com',
   schemes: ['https'],
 };
 
