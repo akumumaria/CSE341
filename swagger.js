@@ -5,8 +5,8 @@ const doc = {
     title: 'CSE341 API',
     description: 'CSE341 backend project API documentation',
   },
-  host: 'localhost:3000',
-  schemes: ['http'],
+  host: 'https://cse341-rtep.onrender.com',
+  schemes: ['https'],
 };
 
 const outputFile = './swagger.json';
