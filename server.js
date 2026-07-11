@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const { connectToDatabase } = require('./src/database/connect');
 const contactsRoutes = require('./src/routes/contacts');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 dotenv.config();
 
@@ -15,6 +17,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.json({ message: 'CSE341 server is running' });
 });
+
+// Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/contacts', contactsRoutes);
 

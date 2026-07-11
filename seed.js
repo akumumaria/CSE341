@@ -38,6 +38,20 @@ const seedContacts = async () => {
         favoriteColor: 'Green',
         birthday: '1918-08-26',
       },
+      {
+        firstName: 'Alan',
+        lastName: 'Turing',
+        email: 'alan@example.com',
+        favoriteColor: 'Red',
+        birthday: '1912-06-23',
+      },
+      {
+        firstName: 'Margaret',
+        lastName: 'Hamilton',
+        email: 'margaret@example.com',
+        favoriteColor: 'Yellow',
+        birthday: '1936-08-17',
+      },
     ]);
 
     console.log(`Seed data inserted successfully (${result.length} contacts)`);

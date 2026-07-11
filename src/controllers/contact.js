@@ -45,4 +45,34 @@ const getContactById = async (id) => {
   }
 };
 
-module.exports = { Contact, getAllContacts, getContactById };
+// Create a new contact
+const createContact = async (contactData) => {
+  try {
+    const newContact = await Contact.create(contactData);
+    return newContact;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Update a contact by ID
+const updateContact = async (id, contactData) => {
+  try {
+    const updatedContact = await Contact.findByIdAndUpdate(id, contactData, { new: true });
+    return updatedContact;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Delete a contact by ID
+const deleteContact = async (id) => {
+  try {
+    const deletedContact = await Contact.findByIdAndDelete(id);
+    return deletedContact;
+  } catch (error) {
+    throw error;
+  }
+};
+
+module.exports = { Contact, getAllContacts, getContactById, createContact, updateContact, deleteContact };

@@ -4,6 +4,33 @@ GET http://localhost:3000/contacts
 ### Get one contact by id (replace with actual MongoDB ID from your database)
 GET http://localhost:3000/contacts/[id]
 
+### Create a new contact
+POST http://localhost:3000/contacts
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "favoriteColor": "Blue",
+  "birthday": "1990-01-15"
+}
+
+### Update a contact (replace with actual MongoDB ID from your database)
+PUT http://localhost:3000/contacts/[id]
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "email": "john.smith@example.com",
+  "favoriteColor": "Red",
+  "birthday": "1990-01-15"
+}
+
+### Delete a contact (replace with actual MongoDB ID from your database)
+DELETE http://localhost:3000/contacts/[id]
+
 ###_testing on Render (after deployment)
 GET https://cse341-rtep.onrender.com/contacts/[id]
 
