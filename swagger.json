@@ -11,12 +11,13 @@
     "http"
   ],
   "paths": {
-    "/": {
+    "/contacts/": {
       "get": {
-        "description": "",
+        "summary": "Get all contacts",
+        "description": "Retrieve a list of all contacts from the database",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "A list of contacts"
           },
           "500": {
             "description": "Internal Server Error"
@@ -24,10 +25,39 @@
         }
       },
       "post": {
-        "description": "",
+        "summary": "Create a new contact",
+        "description": "Create a new contact with all required fields",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["firstName", "lastName", "email", "favoriteColor", "birthday"],
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "favoriteColor": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Contact created successfully"
           },
           "500": {
             "description": "Internal Server Error"
@@ -35,23 +65,25 @@
         }
       }
     },
-    "/{id}": {
+    "/contacts/{id}": {
       "get": {
-        "description": "",
+        "summary": "Get a contact by ID",
+        "description": "Retrieve a single contact by their ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The contact ID"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "A single contact object"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Contact not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -59,21 +91,48 @@
         }
       },
       "put": {
-        "description": "",
+        "summary": "Update a contact by ID",
+        "description": "Update an existing contact by their ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The contact ID"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "firstName": {
+                  "type": "string"
+                },
+                "lastName": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "favoriteColor": {
+                  "type": "string"
+                },
+                "birthday": {
+                  "type": "string"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Contact updated successfully"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Contact not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -81,21 +140,23 @@
         }
       },
       "delete": {
-        "description": "",
+        "summary": "Delete a contact by ID",
+        "description": "Delete a contact by their ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "description": "The contact ID"
           }
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "Contact deleted successfully"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Contact not found"
           },
           "500": {
             "description": "Internal Server Error"
