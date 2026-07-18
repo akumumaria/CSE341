@@ -2,166 +2,220 @@
   "swagger": "2.0",
   "info": {
     "title": "CSE341 API",
-    "description": "CSE341 backend project API documentation",
     "version": "1.0.0"
   },
   "host": "https://cse341-rtep.onrender.com",
   "basePath": "/",
-  "schemes": [
-    "http"
+  "schemes": ["http"],
+  "tags": [
+    { "name": "Contacts" },
+    { "name": "Products" }
   ],
   "paths": {
-    "/contacts/": {
+    "/contacts": {
       "get": {
+        "tags": ["Contacts"],
         "summary": "Get all contacts",
-        "description": "Retrieve a list of all contacts from the database",
         "responses": {
           "200": {
-            "description": "A list of contacts"
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Contact" }
+            }
           },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "500": { "description": "Internal Server Error" }
         }
       },
       "post": {
-        "summary": "Create a new contact",
-        "description": "Create a new contact with all required fields",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "required": ["firstName", "lastName", "email", "favoriteColor", "birthday"],
-              "properties": {
-                "firstName": {
-                  "type": "string"
-                },
-                "lastName": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "favoriteColor": {
-                  "type": "string"
-                },
-                "birthday": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
+        "tags": ["Contacts"],
+        "summary": "Create a contact",
+        "parameters": [{
+          "name": "body",
+          "in": "body",
+          "required": true,
+          "schema": { "$ref": "#/definitions/ContactInput" }
+        }],
         "responses": {
-          "201": {
-            "description": "Contact created successfully"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "201": { "schema": { "$ref": "#/definitions/Contact" } },
+          "400": { "description": "Validation failed" },
+          "500": { "description": "Internal Server Error" }
         }
       }
     },
     "/contacts/{id}": {
       "get": {
-        "summary": "Get a contact by ID",
-        "description": "Retrieve a single contact by their ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The contact ID"
-          }
-        ],
+        "tags": ["Contacts"],
+        "summary": "Get contact by ID",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
         "responses": {
-          "200": {
-            "description": "A single contact object"
-          },
-          "404": {
-            "description": "Contact not found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "schema": { "$ref": "#/definitions/Contact" } },
+          "404": { "description": "Not found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "put": {
-        "summary": "Update a contact by ID",
-        "description": "Update an existing contact by their ID",
+        "tags": ["Contacts"],
+        "summary": "Update contact",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The contact ID"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "type": "string"
-                },
-                "lastName": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "favoriteColor": {
-                  "type": "string"
-                },
-                "birthday": {
-                  "type": "string"
-                }
-              }
-            }
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/ContactInput" } }
         ],
         "responses": {
-          "200": {
-            "description": "Contact updated successfully"
-          },
-          "404": {
-            "description": "Contact not found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "schema": { "$ref": "#/definitions/Contact" } },
+          "400": { "description": "Validation failed" },
+          "404": { "description": "Not found" },
+          "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
-        "summary": "Delete a contact by ID",
-        "description": "Delete a contact by their ID",
+        "tags": ["Contacts"],
+        "summary": "Delete contact",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "204": { "description": "Deleted" },
+          "404": { "description": "Not found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get all products",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "array",
+              "items": { "$ref": "#/definitions/Product" }
+            }
+          },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create a product",
+        "parameters": [{
+          "name": "body",
+          "in": "body",
+          "required": true,
+          "schema": { "$ref": "#/definitions/ProductInput" }
+        }],
+        "responses": {
+          "201": { "schema": { "$ref": "#/definitions/Product" } },
+          "400": { "description": "Validation failed" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get product by ID",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/Product" } },
+          "404": { "description": "Not found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      },
+      "put": {
+        "tags": ["Products"],
+        "summary": "Update product",
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string",
-            "description": "The contact ID"
-          }
+          { "name": "id", "in": "path", "required": true, "type": "string" },
+          { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/ProductInput" } }
         ],
         "responses": {
-          "204": {
-            "description": "Contact deleted successfully"
-          },
-          "404": {
-            "description": "Contact not found"
-          },
-          "500": {
-            "description": "Internal Server Error"
-          }
+          "200": { "schema": { "$ref": "#/definitions/Product" } },
+          "400": { "description": "Validation failed" },
+          "404": { "description": "Not found" },
+          "500": { "description": "Internal Server Error" }
         }
+      },
+      "delete": {
+        "tags": ["Products"],
+        "summary": "Delete product",
+        "parameters": [{
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }],
+        "responses": {
+          "204": { "description": "Deleted" },
+          "404": { "description": "Not found" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "_id": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "dateOfBirth": { "type": "string", "format": "date" },
+        "role": { "type": "string" }
+      }
+    },
+    "ContactInput": {
+      "type": "object",
+      "required": ["firstName", "lastName", "email", "phone", "address", "dateOfBirth", "role"],
+      "properties": {
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "dateOfBirth": { "type": "string", "format": "date" },
+        "role": { "type": "string" }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "_id": { "type": "string" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "category": { "type": "string" },
+        "stock": { "type": "integer" },
+        "sku": { "type": "string" },
+        "brand": { "type": "string" }
+      }
+    },
+    "ProductInput": {
+      "type": "object",
+      "required": ["name", "description", "price", "category", "stock", "sku", "brand"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "category": { "type": "string" },
+        "stock": { "type": "integer" },
+        "sku": { "type": "string" },
+        "brand": { "type": "string" }
       }
     }
   }
