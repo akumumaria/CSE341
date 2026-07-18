@@ -4,12 +4,10 @@
     "title": "CSE341 API",
     "version": "1.0.0"
   },
-  "host": "https://cse341-rtep.onrender.com",
+  "host": "cse341-rtep.onrender.com",
   "basePath": "/",
-  "schemes": ["http"],
-  "tags": [
-    { "name": "Contacts" },
-    { "name": "Products" }
+  "schemes": [
+    "https"
   ],
   "paths": {
     "/contacts": {
