@@ -4,10 +4,10 @@
     "title": "CSE341 API",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "cse341-rtep.onrender.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "securityDefinitions": {
     "githubOAuth": {
