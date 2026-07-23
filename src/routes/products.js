@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
+const { ensureAuthenticated } = require('../middleware/auth');
 const {
   getAllProducts,
   getProductById,
@@ -79,8 +80,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST create new product
-router.post('/', validateProduct, async (req, res) => {
+// POST create new product (PROTECTED - requires authentication)
+router.post('/', ensureAuthenticated, validateProduct, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ 
@@ -100,8 +101,8 @@ router.post('/', validateProduct, async (req, res) => {
   }
 });
 
-// PUT update product
-router.put('/:id', validateProduct, async (req, res) => {
+// PUT update product (PROTECTED - requires authentication)
+router.put('/:id', ensureAuthenticated, validateProduct, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ 
@@ -124,8 +125,8 @@ router.put('/:id', validateProduct, async (req, res) => {
   }
 });
 
-// DELETE product
-router.delete('/:id', async (req, res) => {
+// DELETE product (PROTECTED - requires authentication)
+router.delete('/:id', ensureAuthenticated, async (req, res) => {
   try {
     const deletedProduct = await deleteProduct(req.params.id);
     if (!deletedProduct) {

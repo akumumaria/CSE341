@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
+const { ensureAuthenticated } = require('../middleware/auth');
 const {
   getAllContacts,
   getContactById,
@@ -77,8 +78,8 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// POST create new contact
-router.post('/', validateContact, async (req, res) => {
+// POST create new contact (PROTECTED - requires authentication)
+router.post('/', ensureAuthenticated, validateContact, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ 
@@ -98,8 +99,8 @@ router.post('/', validateContact, async (req, res) => {
   }
 });
 
-// PUT update contact
-router.put('/:id', validateContact, async (req, res) => {
+// PUT update contact (PROTECTED - requires authentication)
+router.put('/:id', ensureAuthenticated, validateContact, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ 
@@ -122,8 +123,8 @@ router.put('/:id', validateContact, async (req, res) => {
   }
 });
 
-// DELETE contact
-router.delete('/:id', async (req, res) => {
+// DELETE contact (PROTECTED - requires authentication)
+router.delete('/:id', ensureAuthenticated, async (req, res) => {
   try {
     const deletedContact = await deleteContact(req.params.id);
     if (!deletedContact) {

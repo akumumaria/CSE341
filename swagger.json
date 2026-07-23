@@ -4,12 +4,75 @@
     "title": "CSE341 API",
     "version": "1.0.0"
   },
-  "host": "cse341-rtep.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
+  "securityDefinitions": {
+    "githubOAuth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "flow": "implicit",
+      "scopes": {
+        "user:email": "Access user email address"
+      }
+    }
+  },
   "paths": {
+    "/auth/github": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Initiate GitHub OAuth login",
+        "responses": {
+          "302": { "description": "Redirect to GitHub" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "GitHub OAuth callback",
+        "responses": {
+          "302": { "description": "Redirect after successful authentication" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Logout user",
+        "responses": {
+          "302": { "description": "Redirect to home" },
+          "500": { "description": "Internal Server Error" }
+        }
+      }
+    },
+    "/auth/status": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Check authentication status",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "authenticated": { "type": "boolean" },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "username": { "type": "string" },
+                    "displayName": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/contacts": {
       "get": {
         "tags": ["Contacts"],
@@ -26,7 +89,8 @@
       },
       "post": {
         "tags": ["Contacts"],
-        "summary": "Create a contact",
+        "summary": "Create a contact (Protected)",
+        "security": [{ "githubOAuth": [] }],
         "parameters": [{
           "name": "body",
           "in": "body",
@@ -36,6 +100,7 @@
         "responses": {
           "201": { "schema": { "$ref": "#/definitions/Contact" } },
           "400": { "description": "Validation failed" },
+          "401": { "description": "Unauthorized - authentication required" },
           "500": { "description": "Internal Server Error" }
         }
       }
@@ -58,7 +123,8 @@
       },
       "put": {
         "tags": ["Contacts"],
-        "summary": "Update contact",
+        "summary": "Update contact (Protected)",
+        "security": [{ "githubOAuth": [] }],
         "parameters": [
           { "name": "id", "in": "path", "required": true, "type": "string" },
           { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/ContactInput" } }
@@ -66,13 +132,15 @@
         "responses": {
           "200": { "schema": { "$ref": "#/definitions/Contact" } },
           "400": { "description": "Validation failed" },
+          "401": { "description": "Unauthorized - authentication required" },
           "404": { "description": "Not found" },
           "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
         "tags": ["Contacts"],
-        "summary": "Delete contact",
+        "summary": "Delete contact (Protected)",
+        "security": [{ "githubOAuth": [] }],
         "parameters": [{
           "name": "id",
           "in": "path",
@@ -81,6 +149,7 @@
         }],
         "responses": {
           "204": { "description": "Deleted" },
+          "401": { "description": "Unauthorized - authentication required" },
           "404": { "description": "Not found" },
           "500": { "description": "Internal Server Error" }
         }
@@ -102,7 +171,8 @@
       },
       "post": {
         "tags": ["Products"],
-        "summary": "Create a product",
+        "summary": "Create a product (Protected)",
+        "security": [{ "githubOAuth": [] }],
         "parameters": [{
           "name": "body",
           "in": "body",
@@ -112,6 +182,7 @@
         "responses": {
           "201": { "schema": { "$ref": "#/definitions/Product" } },
           "400": { "description": "Validation failed" },
+          "401": { "description": "Unauthorized - authentication required" },
           "500": { "description": "Internal Server Error" }
         }
       }
@@ -134,7 +205,8 @@
       },
       "put": {
         "tags": ["Products"],
-        "summary": "Update product",
+        "summary": "Update product (Protected)",
+        "security": [{ "githubOAuth": [] }],
         "parameters": [
           { "name": "id", "in": "path", "required": true, "type": "string" },
           { "name": "body", "in": "body", "required": true, "schema": { "$ref": "#/definitions/ProductInput" } }
@@ -142,13 +214,15 @@
         "responses": {
           "200": { "schema": { "$ref": "#/definitions/Product" } },
           "400": { "description": "Validation failed" },
+          "401": { "description": "Unauthorized - authentication required" },
           "404": { "description": "Not found" },
           "500": { "description": "Internal Server Error" }
         }
       },
       "delete": {
         "tags": ["Products"],
-        "summary": "Delete product",
+        "summary": "Delete product (Protected)",
+        "security": [{ "githubOAuth": [] }],
         "parameters": [{
           "name": "id",
           "in": "path",
@@ -157,6 +231,7 @@
         }],
         "responses": {
           "204": { "description": "Deleted" },
+          "401": { "description": "Unauthorized - authentication required" },
           "404": { "description": "Not found" },
           "500": { "description": "Internal Server Error" }
         }
